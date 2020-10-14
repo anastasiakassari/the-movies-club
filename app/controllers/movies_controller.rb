@@ -17,6 +17,7 @@ class MoviesController < ApplicationController
 
   # GET /movies/{id}
   def show
+    @ratings = @movie.ratings
   end
 
   # GET /movies/new
@@ -56,6 +57,10 @@ class MoviesController < ApplicationController
     @movie.destroy
     flash[:notice] = "Movie was deleted successfully"
     redirect_to movies_path
+  end
+
+  def search
+    @movies = Movie.paginate(page: params[:page], per_page: 4)
   end
 
   private

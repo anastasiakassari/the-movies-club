@@ -17,3 +17,8 @@ require("channels")
 // const imagePath = (name) => images(name, true)
 
 import "bootstrap"
+
+// $(document).on "ajax:success", "a.rate", (status, data, xhr) -> 
+//   alert("HELLO THERE!!!")
+//   $(".movie-ratings[data-id=#{data.id}]").text data.likes
+//   return
