@@ -1,0 +1,33 @@
+@import 'bootstrap/dist/css/bootstrap';
+
+#nav-logo {
+  color: #dc3546;
+  font-weight: bold;
+}
+
+.apptheme {
+  background-color: #dc3546;
+}
+
+.apptheme-txt {
+  color: #dc3546;
+}
+
+.card {
+  width: 550px !important;
+}
+
+// Sticky footer (https://startbootstrap.com/snippets/sticky-footer-flexbox/)
+html,
+body {
+  height: 100%;
+}
+
+#page-content {
+  flex: 1 0 auto;
+  background-color: #dc35465d;
+}
+
+#sticky-footer {
+  flex-shrink: none;
+}
