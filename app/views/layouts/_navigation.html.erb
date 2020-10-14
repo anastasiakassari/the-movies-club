@@ -11,11 +11,35 @@
           Movies
         </a>
         <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-          <!-- link_to('Create new movie', new_movie_path, class: "dropdown-item") if logged_in? -->
-          <%= link_to'Create new movie', new_movie_path, class: "dropdown-item" %>
+          <%= link_to('Create new movie', new_movie_path, class: "dropdown-item") if logged_in? %>
           <%= link_to 'View movies', movies_path, class: "dropdown-item" %>
         </div>
       </li>
+      <li class="nav-item">
+        <%= link_to "Users", users_path, class: "nav-link" %>
+      </li>
+      <% if !logged_in? %>
+        <li class="nav-item">
+          <%= link_to "Log in", login_path, class: "btn btn-outline-info" %>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Sign up", signup_path, class: "btn btn-outline-success" %>
+        </li>
+      <% else %>
+        <li class="nav-item dropdown">
+          <a class="nav-link dropdown-toggle apptheme-txt" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+            <%= current_user.username %>
+          </a>
+          <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+            <%= link_to 'View profile', user_path(current_user), class: "dropdown-item" %>
+            <%= link_to 'Edit account', edit_user_path(current_user), class: "dropdown-item" %>
+            <%= link_to 'Delete account', current_user, method: :delete, data: { confirm: "Are you sure?"}, class: "dropdown-item text-danger" %>
+          </div>
+        </li>
+        <li class="nav-item">
+          <%= link_to "Log out", logout_path, method: :delete, class: "btn btn-outline-info" %>
+        </li>
+      <% end %>
     </ul>
   </div>
 </nav>

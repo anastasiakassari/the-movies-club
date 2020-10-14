@@ -1,0 +1,13 @@
+
+<div class="container">
+  <h1 class="text-center mt-4 apptheme-txt">
+    <%= @user.full_name%>'s profile
+  </h1>
+  <%= render @user %>
+  <div class="row justify-content-center">
+    <%= link_to "[ Return to users ]", users_path, class: "text-white mb-3" %>
+  </div>
+</div>
+<hr>
+<h1 class="text-center mt-4 apptheme-txt">Movies</h1>
+<%= render 'movies/movies' %>

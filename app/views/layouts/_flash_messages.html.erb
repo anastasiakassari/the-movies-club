@@ -1,4 +1,4 @@
-
+<div class="container">
   <% flash.each do |key, msg| %>
     <div class="alert alert-<%= key == "alert" ? "danger" : "success" %> alert-dismissible fade show" role="alert">
       <%= msg %>    
@@ -7,3 +7,4 @@
       </button>
     </div> 
   <% end %>
+</div>

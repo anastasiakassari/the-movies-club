@@ -1,7 +1,6 @@
 <div class="container">  
-  <div class="row justify-content-md-center">
-    <div class="col-8 mt-4">
-      <%= render @movie %>
-    </div>
+  <%= render @movie %>
+  <div class="row justify-content-center">
+    <%= link_to "[ Return to movies ]", movies_path, class: "text-white mb-3" %>
   </div>
 </div>
