@@ -1,3 +1,14 @@
 <h1 class="text-center mt-4 apptheme-txt">Movies</h1>
 
+<% if logged_in? %>
+
+  <div class="container">
+    <div class="row justify-content-md-center">
+      <div class="col-8 mt-4">
+        <%= link_to "Create movie", new_movie_path, class: "btn btn-success" %>
+      </div>
+    </div>
+  </div>
+<% end %>
+
 <%= render 'movies' %>  
