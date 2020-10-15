@@ -20,4 +20,12 @@ class Movie < ApplicationRecord
       minimum:10, 
       maximum:2560
     }
+
+  def likes
+    self.ratings.find_all{|r| r.value == 1}.count if self.ratings.any?
+  end
+
+  def hates
+    self.ratings.find_all{|r| r.value == -1}.count if self.ratings.any?
+  end
 end

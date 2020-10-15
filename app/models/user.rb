@@ -3,7 +3,7 @@ class User < ApplicationRecord
 
   has_many :movies, dependent: :destroy
 
-  has_many :ratings
+  has_many :ratings, dependent: :destroy
   
   before_save { self.email = email.downcase }
 
@@ -27,4 +27,21 @@ class User < ApplicationRecord
     }
   
   has_secure_password
+
+  def hasRated(movie)
+    ratings = self.ratings
+    if ratings.any? && movie != nil
+      ratings.find_by(movie_id: movie.id)
+    end
+  end
+
+  def likes(movie)
+    rating = hasRated(movie)
+    rating.value == 1 if rating != nil
+  end
+
+  def hates(movie)
+    rating = hasRated(movie)
+    rating.value == -1 if rating != nil
+  end
 end

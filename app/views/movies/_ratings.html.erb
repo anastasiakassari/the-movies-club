@@ -1,0 +1,28 @@
+<% if @movie.ratings.any? %>
+  <p>
+    <span class="text-success"><%= pluralize(@movie.likes, "Like") if @movie.likes > 0 %></span>
+    <span class="text-danger"><%= pluralize(@movie.hates, "Hate") if @movie.hates > 0 %></span>
+  </p>
+<% end %>
+<% if logged_in? %>
+  <% if current_user != @movie.user %>
+    <p>
+      <!-- LIKE BUTTON -->
+      <% if !current_user.hasRated(@movie) || !current_user.likes(@movie) %>
+        <%= link_to "Like", rate_path(movie: @movie, value: 1), method: :post, remote: true , class: "btn rate-btn btn-outline-success"%>
+      <% else %>
+        <%= link_to "Unlike", rate_path(movie: @movie, value: 1), method: :post, remote: true , class: "btn rate-btn btn-success"%>
+      <% end %>
+      <!-- HATE BUTTON -->                 
+      <% if !current_user.hasRated(@movie) || !current_user.hates(@movie) %> 
+        <%= link_to "Hate", rate_path(movie: @movie, value: -1), method: :post, remote: true , class: "btn rate-btn btn-outline-danger" %>
+      <% else %>
+        <%= link_to "Unhate", rate_path(movie: @movie, value: -1), method: :post, remote: true , class: "btn rate-btn btn-danger" %>
+      <% end %>
+    </p>
+  <% end %>
+  <% if current_user == @movie.user || current_user.admin? %>
+    <%= link_to 'Edit', edit_movie_path(@movie), class: "btn btn-info" %>
+    <%= link_to 'Delete', @movie, method: :delete, data: { confirm: "Are you sure?"}, class: "btn btn-danger" %>
+  <% end %>
+<% end %>

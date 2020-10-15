@@ -25,11 +25,4 @@ class ApplicationController < ActionController::Base
     end
   end
 
-  def count_likes(ratings)
-    ratings.find_all{|r| r.value == 1}.count if ratings != nil
-  end
-  
-  def count_hates(ratings)
-    ratings.find_all{|r| r.value == -1}.count if ratings != nil
-  end
 end

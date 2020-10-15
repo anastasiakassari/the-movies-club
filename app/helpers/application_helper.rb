@@ -7,14 +7,6 @@ module ApplicationHelper
   # Check if there is a logged in user
   def logged_in?
     !!current_user
-  end
-
-  def count_likes(ratings)
-    ratings.find_all{|r| r.value == 1}.count if ratings != nil
-  end
-  
-  def count_hates(ratings)
-    ratings.find_all{|r| r.value == -1}.count if ratings != nil
-  end
+  end 
 
 end

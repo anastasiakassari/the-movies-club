@@ -4,30 +4,29 @@ class RatingsController < ApplicationController
 
   def rate
     @rating = Rating.new
-    movie = Movie.find(params[:movie].to_i)
+    @movie = Movie.find(params[:movie].to_i)
     value = params[:value].to_i
-    user = current_user
+    @user = current_user
 
     # Movie user cannot rate their movies
-    if movie.user == user
+    if @movie.user == @user
       head :forbidden
     else
       # Rating exists
-      dbrating = find_rating(movie, user)
+      dbrating = find_rating(@movie, @user)
 
-      @rating.movie = movie
+      @rating.movie = @movie
       @rating.value = value
-      @rating.user = current_user
+      @rating.user = @user
 
       # Create new rating
       if dbrating == nil
         if @rating.valid?
           @rating.save
           respond_to do |format|
-            format.json  { render json: { likes: count_likes(@rating.movie.ratings), hates: count_hates(@rating.movie.ratings), movie_id: movie.id} }
-            #format.js { render partial: 'movies/ratings' }
+            #format.json  { render json: { likes: movie.likes, hates: movie.hates, movie_id: movie.id} }
+            format.js { render partial: 'movies/ratings'} #, locals: { movie: movie }, layout: false }
           end
-          head :created
         else
           head :bad_request
         end
@@ -39,10 +38,9 @@ class RatingsController < ApplicationController
         if dbrating.value != value
           if @rating.update(value: value)
             respond_to do |format|
-              format.json  { render json: { likes: count_likes(@rating.movie.ratings), hates: count_hates(@rating.movie.ratings), movie_id: movie.id} }
-              #format.js { render partial: 'movies/ratings' }
+              #format.json  { render json: { likes: movie.likes, hates: movie.hates, movie_id: movie.id} }
+              format.js { render partial: 'movies/ratings'} #, locals: { movie: movie }, layout: false }
             end
-            head :accepted
           else
             head :bad_request
           end
@@ -50,10 +48,10 @@ class RatingsController < ApplicationController
         else
           @rating.destroy
           respond_to do |format|
-            format.json  { render json: { likes: count_likes(@rating.movie.ratings), hates: count_hates(@rating.movie.ratings), movie_id: movie.id} }
-            #format.js { render partial: 'movies/ratings' }
+            #format.json  { render json: { likes: movie.likes, hates: movie.hates, movie_id: movie.id} }
+            format.js { render partial: 'movies/ratings'}#, locals: { movie: movie }, layout: false }
           end
-          head :ok
+          #head :ok
         end
       end      
     end    

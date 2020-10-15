@@ -1,3 +1,4 @@
+<%= javascript_pack_tag 'test' %>
 <div class="row justify-content-md-center">
   <div class="col-8 mt-4">
     <div class="card text-center shadow mb-5 bg-white rounded">
@@ -6,24 +7,36 @@
         <p class="card-text text-left">
           <%= simple_format(movie.description, length: 100) %>
         </p>
-        <% if movie.ratings.any? %>
-          <p class="movie-ratings" data-id="<%= movie.id %>">
-            <span class="text-success"><%= pluralize(count_likes(movie.ratings), "Like") if count_likes(movie.ratings) > 0 %></span>
-            <span class="text-danger"><%= pluralize(count_hates(movie.ratings), "Hate") if count_hates(movie.ratings) > 0 %></span>
-          </p>
-        <% end %>
-        <% if logged_in? %>
-          <% if current_user != movie.user %>
+        <div id="ratings-div-<%= movie.id %>">
+          <% if movie.ratings.any? %>
             <p>
-              <%= link_to "Like", rate_path(movie: movie, value: 1), method: :post, remote: true , class: "rate btn btn-outline-success"%>               
-              <%= link_to "Hate", rate_path(movie: movie, value: -1), method: :post, remote: true , class: "rate btn btn-outline-danger"%>
+              <span class="text-success"><%= pluralize(movie.likes, "Like") if movie.likes > 0 %></span>
+              <span class="text-danger"><%= pluralize(movie.hates, "Hate") if movie.hates > 0 %></span>
             </p>
           <% end %>
-          <% if current_user == movie.user || current_user.admin? %>
-            <%= link_to 'Edit', edit_movie_path(movie), class: "btn btn-info" %>
-            <%= link_to 'Delete', movie, method: :delete, data: { confirm: "Are you sure?"}, class: "btn btn-danger" %>
+          <% if logged_in? %>
+            <% if current_user != movie.user %>
+              <p>
+                <!-- LIKE BUTTON -->
+                <% if !current_user.hasRated(movie) || !current_user.likes(movie) %>
+                  <%= link_to "Like", rate_path(movie: movie, value: 1), method: :post, remote: true , class: "btn rate-btn btn-outline-success"%>
+                <% else %>
+                  <%= link_to "Unlike", rate_path(movie: movie, value: 1), method: :post, remote: true , class: "btn rate-btn btn-success"%>
+                <% end %>
+                <!-- HATE BUTTON -->                 
+                <% if !current_user.hasRated(movie) || !current_user.hates(movie) %> 
+                  <%= link_to "Hate", rate_path(movie: movie, value: -1), method: :post, remote: true , class: "btn rate-btn btn-outline-danger" %>
+                <% else %>
+                  <%= link_to "Unhate", rate_path(movie: movie, value: -1), method: :post, remote: true , class: "btn rate-btn btn-danger" %>
+                <% end %>
+              </p>
+            <% end %>
+            <% if current_user == movie.user || current_user.admin? %>
+              <%= link_to 'Edit', edit_movie_path(movie), class: "btn btn-info" %>
+              <%= link_to 'Delete', movie, method: :delete, data: { confirm: "Are you sure?"}, class: "btn btn-danger" %>
+            <% end %>
           <% end %>
-        <% end %>
+        </div>
       </div>
       <div class="card-footer">
         <small class="text-muted">              
