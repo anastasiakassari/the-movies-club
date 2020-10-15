@@ -10,7 +10,8 @@
           <%= user.full_name %>
         </h5>
         <p class="card-text">
-          <%= pluralize(user.movies.count, "movie") %>
+          <%= mail_to user.email %> <br>
+          <%= pluralize(user.movies.count, "movie") %> published
         </p>
         <% if logged_in? && (current_user == user || current_user.admin?) %>
           <%= link_to 'Edit account', edit_user_path(user), class: "btn btn-outline-info" %>

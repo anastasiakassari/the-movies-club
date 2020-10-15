@@ -22,10 +22,18 @@ class Movie < ApplicationRecord
     }
 
   def likes
-    self.ratings.find_all{|r| r.value == 1}.count if self.ratings.any?
+    if self.ratings.any?
+      self.ratings.find_all{|r| r.value == 1}.count
+    else
+      0
+    end
   end
 
   def hates
-    self.ratings.find_all{|r| r.value == -1}.count if self.ratings.any?
+    if self.ratings.any?
+      self.ratings.find_all{|r| r.value == -1}.count
+    else
+      0
+    end
   end
 end
