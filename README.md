@@ -1,3 +1,3 @@
 # README
 
-This is MovieRama, a social platform to share their favourite movies.
+This is The Movies Club, a social platform for users to share their favourite movies.

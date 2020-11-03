@@ -32,7 +32,7 @@ class UsersController < ApplicationController
   def create
     @user = User.new(user_params)
     if @user.save
-      flash[:notice] = "Welcome to MovieRama, #{@user.username}!"
+      flash[:notice] = "Welcome to The Movies Club, #{@user.username}!"
       #Set user session
       session[:user_id] = @user.id
       redirect_to root_path #user_path(@user)
